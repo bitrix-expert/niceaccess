@@ -1,6 +1,6 @@
 <?php
 /**
- * @link https://github.com/bitrix-expert/tools
+ * @link https://github.com/bitrix-expert/niceaccess
  * @copyright Copyright © 2015 Nik Samokhvalov
  * @license MIT
  */
