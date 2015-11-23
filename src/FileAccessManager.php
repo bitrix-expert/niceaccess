@@ -69,6 +69,8 @@ class FileAccessManager
         $content = preg_replace_callback('/(PERM\[.+\]\[)(\"G?[0-9]+\")(\])/', function ($matches) {
             $matches[2] = trim($matches[2], "\"");
             $groupId = str_replace('G', '', $matches[2], $addG);
+            
+            // @todo Если символьный код не установлен?
             $groupCode = GroupTools::findById($groupId)->code();
 
             return $matches[1] . ($addG ? "'G'." : '') . "\Bex\Tools\Group\GroupTools::find('{$groupCode}')->id()" . $matches[3];

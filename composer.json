@@ -17,7 +17,7 @@
   ],
   "require": {
     "php": ">=5.3",
-    "bitrix-expert/tools": "2"
+    "bitrix-expert/tools": "1"
   },
   "autoload": {
     "psr-4": {"Bex\\Niceaccess\\": "src/"},
