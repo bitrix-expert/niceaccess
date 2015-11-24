@@ -9,7 +9,6 @@ namespace Bex\Niceaccess;
 
 use Bex\Tools\Group\GroupTools;
 use Bex\Tools\ValueNotFoundException;
-use Bitrix\Main\ArgumentNullException;
 use Bitrix\Main\IO\File;
 use Bitrix\Main\IO\InvalidPathException;
 
@@ -26,7 +25,7 @@ class FileAccessManager
 
     /**
      * FileAccessManager constructor.
-     * 
+     *
      * @param string $path Full path to file .access.php
      *
      * @throws InvalidPathException Invalid path to file.
@@ -39,9 +38,9 @@ class FileAccessManager
         }
 
         $this->path = $path;
-        
+
         $file = new File($path);
-        
+
         if ($file->getName() === '.access.php')
         {
             $this->isFileAccess = true;
@@ -65,16 +64,15 @@ class FileAccessManager
         {
             return false;
         }
-        
+
         $content = preg_replace_callback('/(PERM\[.+\]\[)(\"G?[0-9]+\")(\])/', function ($matches) {
             $matches[2] = trim($matches[2], "\"");
             $groupId = str_replace('G', '', $matches[2], $addG);
-                        
+
             try
             {
                 $groupCode = GroupTools::findById($groupId)->code();
-            }
-            catch (ValueNotFoundException $e)
+            } catch (ValueNotFoundException $e)
             {
                 return $matches[0];
             }
@@ -83,7 +81,7 @@ class FileAccessManager
 
             return $matches[1] . $value . $matches[3];
         }, $content);
-        
+
         return true;
     }
 

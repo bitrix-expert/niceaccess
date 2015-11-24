@@ -7,4 +7,4 @@
 
 $manager = \Bitrix\Main\EventManager::getInstance();
 
-$manager->addEventHandler('main', 'OnBeforeChangeFile', array('\Bex\Niceaccess\FileAccessManager', 'onBeforeChangeFile'));
+$manager->addEventHandler('main', 'OnBeforeChangeFile', ['\Bex\Niceaccess\FileAccessManager', 'onBeforeChangeFile']);
