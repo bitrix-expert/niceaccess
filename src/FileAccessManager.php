@@ -7,14 +7,15 @@
 
 namespace Bex\Niceaccess;
 
-use Bex\Tools\GroupTools;
+use Bex\Tools\Group\GroupTools;
+use Bex\Tools\ValueNotFoundException;
 use Bitrix\Main\ArgumentNullException;
 use Bitrix\Main\IO\File;
 use Bitrix\Main\IO\InvalidPathException;
 
 /**
  * Implements replacement of user group id's by \Bex\Tools method which returns user group id by symbol code
- * in .access.php files. File .access.php will not depend on DB user group id after that
+ * in .access.php files. File .access.php will not depend on DB user group id after that.
  *
  * @author Nik Samokhvalov <nik@samokhvalov.info>
  */
@@ -48,12 +49,11 @@ class FileAccessManager
     }
 
     /**
-     * Resave file .access.php, with usage symbol of the codes users groups instead id's
+     * Converting content from .access.php file, with usage symbol of the codes users groups instead id's.
      *
      * @param string $content
      *
      * @return bool
-     * @throws ArgumentNullException
      */
     public function convertContent(&$content)
     {
@@ -63,17 +63,25 @@ class FileAccessManager
         }
         elseif (empty($content))
         {
-            throw new ArgumentNullException('content');
+            return false;
         }
         
         $content = preg_replace_callback('/(PERM\[.+\]\[)(\"G?[0-9]+\")(\])/', function ($matches) {
             $matches[2] = trim($matches[2], "\"");
             $groupId = str_replace('G', '', $matches[2], $addG);
+                        
+            try
+            {
+                $groupCode = GroupTools::findById($groupId)->code();
+            }
+            catch (ValueNotFoundException $e)
+            {
+                return $matches[0];
+            }
             
-            // @todo Если символьный код не установлен?
-            $groupCode = GroupTools::findById($groupId)->code();
+            $value = ($addG ? "'G'." : '') . '\Bex\Tools\Group\GroupTools::find(\'' . $groupCode . '\', true)->id()';
 
-            return $matches[1] . ($addG ? "'G'." : '') . "\Bex\Tools\Group\GroupTools::find('{$groupCode}')->id()" . $matches[3];
+            return $matches[1] . $value . $matches[3];
         }, $content);
         
         return true;
