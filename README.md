@@ -23,5 +23,5 @@ composer require bitrix-expert/niceaccess
 
 ## Требования
 
-* PHP >= 5.3
+* PHP >= 5.4
 * Bitrix CMS >= 15.0.2
