@@ -12,6 +12,15 @@ Niceaccess solves this problem by substitution of IDs to character codes user gr
 in the form of an API call Bex\Tools: `\Bex\Tools\GroupTools::find('code')->id()`. Because of this, your files 
 `.access.php` will be relevant to with any database.
 
+Example file `.access.php`:
+
+```php
+<?
+$PERM["admin"][\Bex\Tools\Group\GroupTools::find('CONTROL_PANEL_USERS', true)->id()]="R";
+$PERM["admin"]["*"]="D";
+?>
+```
+
 ## Installation
 
 ```
