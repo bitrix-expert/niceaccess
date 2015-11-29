@@ -5,23 +5,20 @@
 [![Total Downloads](https://poser.pugx.org/bitrix-expert/niceaccess/downloads)](https://packagist.org/packages/bitrix-expert/niceaccess) 
 [![License](https://poser.pugx.org/bitrix-expert/niceaccess/license)](https://packagist.org/packages/bitrix-expert/niceaccess)
 
-Поддержка файлов с правами доступа (`.access.php`) в пригодном для мигрирования на несколько площадок состоянии. 
-Библиотека будет пересохранять файлы `.access.php`, заменяя в них идентификаторы групп пользователей на метод 
-`\Bex\Tools\GroupTools::find('code')->id()`, возвращающий идентификатор по символьному коду группы. Это позволит версионировать 
-файлы `.access.php` и использовать их с любой БД, даже если идентификаторы групп пользователей различаются.
+Bitrix writes `.access.php` (files of access) the numerical group IDs of users, which prevents its migration from site 
+to site where different databases (dev zone, test, production, etc.).
 
-Кроме того, модуль запрещает сохранять группы пользователей без символьных кодов.
+Niceaccess solves this problem by substitution of IDs to character codes user groups. The character code is recorded 
+in the form of an API call Bex\Tools: `\Bex\Tools\GroupTools::find('code')->id()`. Because of this, your files 
+`.access.php` will be relevant to with any database.
 
-## Установка
-
-Установите Композер. Добавьте модуль в `composer.json`:
+## Installation
 
 ```
-cd path/to/project/root
 composer require bitrix-expert/niceaccess
 ```
 
-## Требования
+## Requirements
 
 * PHP >= 5.4
 * Bitrix CMS >= 15.0.2
