@@ -57,7 +57,7 @@ class GroupAccessManager
      */
     public function check($groupCode)
     {
-        $groupId = GroupTools::find($groupCode, true);
+        $groupId = GroupTools::find($groupCode, true)->id();
         if ((int)$groupId > 0) {
             global $USER;
             return in_array($groupId, $USER->GetUserGroupArray());
