@@ -10,6 +10,9 @@ namespace Bex\Niceaccess;
 use Bex\Tools\Group\GroupTools;
 
 /**
+ * Class of access manager group
+ * Implements method of checking current user entries in group by code
+ *
  * Example:
  *  <?php
  *      use Bex\Niceaccess\GroupAccessManager;
@@ -18,7 +21,7 @@ use Bex\Tools\Group\GroupTools;
 class GroupAccessManager
 {
     /**
-     * @var static
+     * @var static access manager instance
      */
     protected static $instance;
 
@@ -38,7 +41,7 @@ class GroupAccessManager
     }
 
     /**
-     * Get instance
+     * Get access manager instance
      * @return static
      */
     public static function instance()
@@ -51,7 +54,7 @@ class GroupAccessManager
     }
 
     /**
-     * Check entry current user in group by code
+     * Check current user entry in group by code
      * @param string $groupCode group's code
      * @return bool
      */
