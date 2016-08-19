@@ -44,7 +44,7 @@ class GroupAccessManager
      * Get access manager instance
      * @return static
      */
-    public static function instance()
+    public static function getInstance()
     {
         if (empty(static::$instance)) {
             static::$instance = new static;
