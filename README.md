@@ -5,6 +5,8 @@
 [![Total Downloads](https://poser.pugx.org/bitrix-expert/niceaccess/downloads)](https://packagist.org/packages/bitrix-expert/niceaccess) 
 [![License](https://poser.pugx.org/bitrix-expert/niceaccess/license)](https://packagist.org/packages/bitrix-expert/niceaccess)
 
+## `.access.php`
+
 Bitrix writes `.access.php` (files of access) the numerical group IDs of users, which prevents its migration from site 
 to site where different databases (dev zone, test, production, etc.).
 
@@ -20,6 +22,10 @@ $PERM["admin"][\Bex\Tools\Group\GroupTools::find('CONTROL_PANEL_USERS', true)->i
 $PERM["admin"]["*"]="D";
 ?>
 ```
+
+## Tools for nice work with access rights
+
+Class `\Bex\Niceaccess\AccessManager` implements API of checking access of current user.
 
 ## Installation
 

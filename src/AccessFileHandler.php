@@ -1,8 +1,7 @@
 <?php
 /**
- * @link https://github.com/bitrix-expert/niceaccess
- * @copyright Copyright © 2015 Nik Samokhvalov
- * @license MIT
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
  */
 
 namespace Bex\Niceaccess;
@@ -18,7 +17,7 @@ use Bitrix\Main\IO\InvalidPathException;
  *
  * @author Nik Samokhvalov <nik@samokhvalov.info>
  */
-class FileAccessManager
+class AccessFileHandler
 {
     protected $path;
     protected $isFileAccess = false;
@@ -32,8 +31,7 @@ class FileAccessManager
      */
     public function __construct($path)
     {
-        if (empty($path))
-        {
+        if (empty($path)) {
             throw new InvalidPathException($path);
         }
 
@@ -41,8 +39,7 @@ class FileAccessManager
 
         $file = new File($path);
 
-        if ($file->getName() === '.access.php')
-        {
+        if ($file->getName() === '.access.php') {
             $this->isFileAccess = true;
         }
     }
@@ -56,12 +53,9 @@ class FileAccessManager
      */
     public function convertContent(&$content)
     {
-        if (!$this->isFileAccess)
-        {
+        if (!$this->isFileAccess) {
             return false;
-        }
-        elseif (empty($content))
-        {
+        } elseif (empty($content)) {
             return false;
         }
 
@@ -69,14 +63,12 @@ class FileAccessManager
             $matches[2] = trim($matches[2], "\"");
             $groupId = str_replace('G', '', $matches[2], $addG);
 
-            try
-            {
+            try {
                 $groupCode = GroupTools::findById($groupId)->code();
-            } catch (ValueNotFoundException $e)
-            {
+            } catch (ValueNotFoundException $e) {
                 return $matches[0];
             }
-            
+
             $value = ($addG ? "'G'." : '') . '\Bex\Tools\Group\GroupTools::find(\'' . $groupCode . '\', true)->id()';
 
             return $matches[1] . $value . $matches[3];
@@ -87,7 +79,7 @@ class FileAccessManager
 
     public static function onBeforeChangeFile($path, &$content)
     {
-        $manager = new FileAccessManager($path);
+        $manager = new AccessFileHandler($path);
         $manager->convertContent($content);
 
         return true;
