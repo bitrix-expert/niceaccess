@@ -14,9 +14,11 @@ use Bex\Tools\Group\GroupTools;
  * Implements method of checking current user entries in group by code
  *
  * Example:
+ * ```
  *  <?php
  *      use Bex\Niceaccess\GroupAccessManager;
- *      $result = GroupAccessManager::instance()->check('group_code');
+ *      $result = GroupAccessManager::getInstance()->check('group_code');
+ * ```
  */
 class GroupAccessManager
 {
@@ -27,7 +29,7 @@ class GroupAccessManager
 
     /**
      * @inheritdoc
-     * @see GroupAccessManager::instance()
+     * @see GroupAccessManager::getInstance()
      */
     private function __construct()
     {
